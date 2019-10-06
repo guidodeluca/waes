@@ -34,7 +34,7 @@ http://[server]:[port]/swagger-ui.html
 [GET] /v1/diff/key
 
 Example:
-
+curl -XGET "Content-type: application/json" 'http://localhost:8080/v1/diff/key'
 ```
 
 ##### Add left side data:
@@ -42,7 +42,7 @@ Example:
 [PUT] /v1/diff/{id}/left: 
 
 Example:
- curl -XGET "Content-type: application/json" -d '{ "mime": "file/plain", "data": "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gRG9uZWMgcmhvbmN1cyBzY2VsZXJpc3F1ZSBxdWFtLCBuZWMgbG9ib3J0aXMgcmlzdXMuCg==" }' 'http://localhost:8080/v1/diff/17b4019b-4eb0-4c14-b6cf-de7754a2b108/left'
+curl -XPUT "Content-type: application/json" -d '{ "mime": "file/plain", "data": "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gRG9uZWMgcmhvbmN1cyBzY2VsZXJpc3F1ZSBxdWFtLCBuZWMgbG9ib3J0aXMgcmlzdXMuCg==" }' 'http://localhost:8080/v1/diff/17b4019b-4eb0-4c14-b6cf-de7754a2b108/left'
 ```
 
 ##### Add right side data:
