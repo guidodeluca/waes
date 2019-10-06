@@ -7,7 +7,6 @@ import com.example.waes.test.services.ComparisonService;
 import com.example.waes.test.utils.KeyUtils;
 import io.swagger.annotations.*;
 import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -43,8 +42,8 @@ public class CompareController {
             @ApiResponse(code = 409, message = "Data is missing")
     })
     public ResponseEntity left(
-            @ApiParam(value = "ID for the comparison", required = true) @PathVariable(value = "id") String id,
-            @ApiParam(value = "Data to be added to the comparison", required = true) @RequestBody JsonFile file) {
+            @ApiParam(value = "ID for the comparison", example = "f0fd26c2-8a04-4afd-9252-b304cd644123", required = true) @PathVariable(value = "id") String id,
+            @ApiParam(value = "Data to be added to the comparison. Must be in base64 format", required = true) @RequestBody JsonFile file) {
         comparisonService.addData(id, file.getData(), SideEnum.LEFT);
 
         return ResponseEntity.ok().build();
@@ -58,7 +57,7 @@ public class CompareController {
     })
     public ResponseEntity right(
             @ApiParam(value = "ID for the comparison", required = true) @PathVariable("id") String id,
-            @ApiParam(value = "Data to be added to the comparison", required = true) @RequestBody JsonFile file) {
+            @ApiParam(value = "Data to be added to the comparison. Must be in base64 format", required = true) @RequestBody JsonFile file) {
         comparisonService.addData(id, file.getData(), SideEnum.RIGHT);
 
         return ResponseEntity.ok().build();
@@ -71,7 +70,7 @@ public class CompareController {
             @ApiResponse(code = 400, message = "Validation failure")
     })
     public ResponseEntity compare(
-            @ApiParam(value = "ID for the comparison", required = true) @PathVariable("id") String id) {
+            @ApiParam(value = "ID for the comparison", example = "f0fd26c2-8a04-4afd-9252-b304cd644123", required = true) @PathVariable("id") String id) {
         Response response = comparisonService.compare(id);
         return ResponseEntity.ok(response);
     }

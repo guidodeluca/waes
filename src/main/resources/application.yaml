@@ -30,3 +30,14 @@ spring:
   h2:
     console:
       enabled: true
+
+---
+spring:
+  profiles: prod
+  datasource:
+    url: 'jdbc:mysql://db:3306/test'
+    driverClassName: com.mysql.jdbc.Driver
+    username: 'test'
+    password: 'test'
+  jpa:
+    database-platform: 'org.hibernate.dialect.MySQL5Dialect'
