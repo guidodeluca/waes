@@ -63,7 +63,10 @@ curl -XPOST 'http://localhost:8081/v1/diff/17b4019b-4eb0-4c14-b6cf-de7754a2b108'
 
 ## APM
 
-For producction monitoring is configured Datadog APM (https://www.datadoghq.com) free account
+For producction monitoring is configured Datadog APM (https://www.datadoghq.com) free account.
+Por running the agent, execute
+
+`DOCKER_CONTENT_TRUST=1 docker run -d --name dd-agent -v /var/run/docker.sock:/var/run/docker.sock:ro -v /proc/:/host/proc/:ro -v /sys/fs/cgroup/:/host/sys/fs/cgroup:ro -e DD_API_KEY=c262d3b0a19fca78de3ddec52c03e414 -e DD_SITE="datadoghq.eu" datadog/agent:latest`
 
 ## Running the tests
 
