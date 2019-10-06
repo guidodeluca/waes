@@ -42,7 +42,7 @@ Example:
 [PUT] /v1/diff/{id}/left: 
 
 Example:
- 
+ curl -XGET "Content-type: application/json" -d '{ "mime": "file/plain", "data": "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gRG9uZWMgcmhvbmN1cyBzY2VsZXJpc3F1ZSBxdWFtLCBuZWMgbG9ib3J0aXMgcmlzdXMuCg==" }' 'http://localhost:8080/v1/diff/17b4019b-4eb0-4c14-b6cf-de7754a2b108/left'
 ```
 
 ##### Add right side data:
@@ -50,7 +50,7 @@ Example:
 [PUT] /v1/diff/{id}/right
 
 Example: 
-
+curl -XPUT "Content-type: application/json" -d '{ "mime": "file/plain", "data": "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gRG9uZWMgcmhvbmN1cyBzY2VsZXJpc3F1ZSBxdWFtLCBuZWMgbG9ib3J0aXMgcmlzdXMuCg==" }' 'http://localhost:8080/v1/diff/17b4019b-4eb0-4c14-b6cf-de7754a2b108/right'
 ```
 
 ##### Compare sides:
@@ -58,8 +58,12 @@ Example:
 [POST] /v1/diff/{id}
 
 Example:
-
+curl -XPOST 'http://localhost:8081/v1/diff/17b4019b-4eb0-4c14-b6cf-de7754a2b108'
 ```
+
+## APM
+
+For producction monitoring is configured Datadog APM (https://www.datadoghq.com) free account
 
 ## Running the tests
 
