@@ -1,5 +1,6 @@
 package com.example.waes.test.controllers;
 
+import com.example.waes.test.api.JsonFile;
 import com.example.waes.test.api.Response;
 import com.example.waes.test.api.ResponseType;
 import com.example.waes.test.repository.ComparisonRepository;
@@ -28,10 +29,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class ComparisonControllerTest {
     private final static String URL_CONTEXT = "/v1/diff";
-    private static final String COMPARISON_DATA_1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus scelerisque quam, nec lobortis risus.";
-    private static final String COMPARISON_DATA_2 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in lorem accumsan, eleifend sem ut nullam.";
-    private static final String COMPARISON_DATA_3 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sodales euismod rhoncus. Duis scelerisque blandit.";
+    private static final String COMPARISON_DATA_1 = "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gRG9uZWMgcmhvbmN1cyBzY2VsZXJpc3F1ZSBxdWFtLCBuZWMgbG9ib3J0aXMgcmlzdXMuCg==";
+    private static final String COMPARISON_DATA_2 = "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gTWFlY2VuYXMgaW4gbG9yZW0gYWNjdW1zYW4sIGVsZWlmZW5kIHNlbSB1dCBudWxsYW0uCg==";
+    private static final String COMPARISON_DATA_3 = "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gTnVuYyBzb2RhbGVzIGV1aXNtb2QgcmhvbmN1cy4gRHVpcyBzY2VsZXJpc3F1ZSBibGFuZGl0Lgo";
 
+    private JsonFile jsonFileData1, jsonFileData2, jsonFileData3;
     private ObjectMapper objectMapper;
 
     @Autowired
@@ -44,7 +46,11 @@ public class ComparisonControllerTest {
 
     @Before
     public void setUp() {
-        this.objectMapper = new ObjectMapper();
+        jsonFileData1 = new JsonFile("file/plain", COMPARISON_DATA_1);
+        jsonFileData2 = new JsonFile("file/plain", COMPARISON_DATA_2);
+        jsonFileData3 = new JsonFile("file/plain", COMPARISON_DATA_3);
+
+        objectMapper = new ObjectMapper();
     }
 
     @Test
@@ -52,8 +58,8 @@ public class ComparisonControllerTest {
         String id = KeyUtils.createKey();
 
         mockMvc.perform(put(URL_CONTEXT + "/{id}/left", id)
-                .contentType("application/x-www-form-urlencoded")
-                .param("data", COMPARISON_DATA_1)
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(jsonFileData1))
                 .accept(MimeTypeUtils.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
     }
@@ -63,8 +69,8 @@ public class ComparisonControllerTest {
         String id = KeyUtils.createKey();
 
         mockMvc.perform(put(URL_CONTEXT + "/{id}/right", id)
-                .contentType("application/x-www-form-urlencoded")
-                .param("data", COMPARISON_DATA_2)
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(jsonFileData2))
                 .accept(MimeTypeUtils.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
     }
@@ -74,14 +80,14 @@ public class ComparisonControllerTest {
         String id = KeyUtils.createKey();
 
         mockMvc.perform(put(URL_CONTEXT + "/{id}/left", id)
-                .contentType("application/x-www-form-urlencoded")
-                .param("data", COMPARISON_DATA_2)
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(jsonFileData1))
                 .accept(MimeTypeUtils.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
 
         mockMvc.perform(put(URL_CONTEXT + "/{id}/right", id)
-                .contentType("application/x-www-form-urlencoded")
-                .param("data", COMPARISON_DATA_2)
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(jsonFileData1))
                 .accept(MimeTypeUtils.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
 
@@ -100,14 +106,14 @@ public class ComparisonControllerTest {
         String id = KeyUtils.createKey();
 
         mockMvc.perform(put(URL_CONTEXT + "/{id}/left", id)
-                .contentType("application/x-www-form-urlencoded")
-                .param("data", COMPARISON_DATA_1)
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(jsonFileData1))
                 .accept(MimeTypeUtils.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
 
         mockMvc.perform(put(URL_CONTEXT + "/{id}/right", id)
-                .contentType("application/x-www-form-urlencoded")
-                .param("data", COMPARISON_DATA_2)
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(jsonFileData2))
                 .accept(MimeTypeUtils.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
 
@@ -127,14 +133,14 @@ public class ComparisonControllerTest {
         String id = KeyUtils.createKey();
 
         mockMvc.perform(put(URL_CONTEXT + "/{id}/left", id)
-                .contentType("application/x-www-form-urlencoded")
-                .param("data", COMPARISON_DATA_2)
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(jsonFileData1))
                 .accept(MimeTypeUtils.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
 
         mockMvc.perform(put(URL_CONTEXT + "/{id}/right", id)
-                .contentType("application/x-www-form-urlencoded")
-                .param("data", COMPARISON_DATA_3)
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(jsonFileData3))
                 .accept(MimeTypeUtils.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
 

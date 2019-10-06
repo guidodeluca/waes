@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Slf4j
 public class ComparisonService {
     private ComparisonRepository comparisonRepository;
 
@@ -30,6 +29,16 @@ public class ComparisonService {
         this.comparisonRepository = comparisonRepository;
     }
 
+    /**
+     *
+     * Add the provided data to the selected side and stores it in the database, for further comparison.
+     *
+     * @param id
+     * @param data
+     * @param side
+     * @return
+     * @throws ValidationDataException
+     */
     public ComparisonEntity addData(String id, String data, SideEnum side) throws ValidationDataException{
         if (StringUtils.isBlank(data)) {
             throw new ValidationDataException(ValidationDataException.DATA_ZEROLENGHT);
@@ -55,6 +64,15 @@ public class ComparisonService {
         return comparisonRepository.save(comparison);
     }
 
+    /**
+     *
+     * Makes the comparison of both contents. If lenght of both files are different, it ll only inform that. But if they are
+     * of the same size it ll compare the content and show the information about each.
+     *
+     * @param id of the contents
+     * @return
+     * @throws IncompleteDataException
+     */
     public Response compare(String id) throws IncompleteDataException {
         Optional<ComparisonEntity> optComparison = comparisonRepository.findById(id);
 
@@ -79,6 +97,13 @@ public class ComparisonService {
         return response;
     }
 
+    /**
+     *  Makes the comparison between both strings and show the differences between each other dependind in which string they are.
+     *
+     * @param left content
+     * @param right content
+     * @return List of differences between both contents, including position and offset of each.
+     */
     private List<Difference> calculateDifferences(String left, String right) {
         List<Difference> differences = new ArrayList<>();
         DiffMatchPatch diffMatchPatch = new DiffMatchPatch();

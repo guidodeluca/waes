@@ -1,5 +1,24 @@
 server:
-  port: 8081
+  port : 8081
+  minThreads: 100
+  maxThreads: 300
+  keepAliveTime: 30000
+
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          filter:
+            CommonsRequestLoggingFilter: DEBUG
+
+management:
+  metrics:
+    export:
+      datadog:
+        api-key: c262d3b0a19fca78de3ddec52c03e414
+        step: 5s
+
 spring:
   datasource:
     url: 'jdbc:h2:mem:comparison;DB_CLOSE_ON_EXIT=FALSE'

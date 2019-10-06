@@ -6,8 +6,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.google.common.io.ByteSource;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Base64;
 
 public class Base64Deserializer extends JsonDeserializer<Object> implements ContextualDeserializer {
@@ -20,15 +24,14 @@ public class Base64Deserializer extends JsonDeserializer<Object> implements Cont
     }
 
     @Override
-    public Object deserialize(JsonParser parser, DeserializationContext context) throws IOException, JsonProcessingException {
+    public String deserialize(JsonParser parser, DeserializationContext context) throws IOException, JsonProcessingException {
         String value = parser.getValueAsString();
         Base64.Decoder decoder = Base64.getDecoder();
-
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             byte[] decodedValue = decoder.decode(value);
-
-            return objectMapper.readValue(decodedValue, this.resultClass);
+            String is = ByteSource.wrap(decodedValue).asCharSource(Charset.defaultCharset()).read();
+            return is;
         } catch (IllegalArgumentException | JsonParseException e) {
             String fieldName = parser.getParsingContext().getCurrentName();
             Class<?> wrapperClass = parser.getParsingContext().getCurrentValue().getClass();

@@ -16,9 +16,9 @@ public class ComparisonEntity {
     @Column(name = "id", nullable = false)
     String id;
 
-    @Column(name = "left", nullable = true)
+    @Column(name = "left", length = 10000, nullable = true)
     String left;
 
-    @Column(name = "right", nullable = true)
+    @Column(name = "right", length = 10000, nullable = true)
     String right;
 }
